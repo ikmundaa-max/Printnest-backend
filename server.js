@@ -286,3 +286,12 @@ app.listen(PORT, () => console.log(`PrintNest API listening on http://localhost:
 app.get('/', (req, res) => {
   res.status(200).send('Printnest backend is running successfully!');
 });
+const path = require('path');
+
+// Serve static files from the build/dist folder
+app.use(express.static(path.join(__dirname, 'public'))); // change 'public' to 'dist' or 'build' if needed
+
+// Fallback to index.html for single-page apps
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
