@@ -1,5 +1,11 @@
 const express = require('express');
 const path = require('path'); // <-- Make sure this is present
+app.get('/', (req, res) => {
+  res.status(200).send('Printnest backend is running successfully!');
+});
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 require("dotenv").config();
 const express = require("express");
 const helmet = require("helmet");
