@@ -1,3 +1,5 @@
+const express = require('express');
+const path = require('path'); // <-- Make sure this is present
 require("dotenv").config();
 const express = require("express");
 const helmet = require("helmet");
