@@ -2,15 +2,39 @@ require("dotenv").config();
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
-const rateLimit = require("express-rate-limit");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const multer = require("multer");
-const fs = require("fs");
 const path = require("path");
+const fs = require("fs");
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const multer = require("multer");
+const rateLimit = require("express-rate-limit");
 const Database = require("better-sqlite3");
 const Razorpay = require("razorpay");
+// Static frontend serving
+const publicDir = path.join(__dirname, "public");
+if (fs.existsSync(publicDir)) {
+  app.use(express.static(publicDir));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(publicDir, "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.status(200).send("Printnest backend is running successfully!");
+  });
+}
+
+// Error handling middleware
+app.use((err, _req, res, _next) => {
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({ error: err.code === "LIMIT_FILE_SIZE" ? "File is too large." : "Upload failed." });
+  }
+  if (err) return res.status(400).json({ error: err.message || "Request failed." });
+  res.status(500).json({ error: "Unexpected server error." });
+});
+
+// Server Listen
+app.listen(PORT, () => console.log(`PrintNest API listening on http://localhost:${PORT}`));
 
 const app = express();
 const PORT = Number(process.env.PORT || 4000);
