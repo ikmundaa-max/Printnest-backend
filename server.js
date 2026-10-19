@@ -283,3 +283,6 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: "Unexpected server error." });
 });
 app.listen(PORT, () => console.log(`PrintNest API listening on http://localhost:${PORT}`));
+app.get('/', (req, res) => {
+  res.status(200).send('Printnest backend is running successfully!');
+});
