@@ -294,4 +294,14 @@ app.use(express.static(path.join(__dirname, 'public'))); // change 'public' to '
 // Fallback to index.html for single-page apps
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+});printnest-backend/
+├── public/             <-- (or 'dist' / 'build')
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+├── server.js
+└── package.json
+
+git add .
+git commit -m "Add static files middleware"
+git push origin main
