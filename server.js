@@ -337,7 +337,7 @@ app.get("/api/admin/users", auth, admin, (_req, res) => {
 });
 
 // Static frontend serving (Optional agar backend se frontend serve karna ho)
-const publicDir = path.join(__dirname, "public");
+// Remove or rename the redundant declaration
 if (fs.existsSync(publicDir)) {
   app.use(express.static(publicDir));
   app.get("*", (req, res) => {
